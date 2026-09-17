@@ -35,8 +35,11 @@ func _build_floor_collision() -> void:
 
 
 func _build_shelf_collision() -> void:
+	# The shelf unit is a top-level "shelf" node with a "snack_shelf"
+	# product cluster nested underneath it, not a top-level "snack_shelf"
+	# node itself, so match on "shelf" here to actually catch it.
 	for child in get_children():
-		if child is Node3D and child.name.begins_with("snack_shelf"):
+		if child is Node3D and child.name.begins_with("shelf"):
 			var aabb := _world_aabb(child)
 			if aabb.size == Vector3.ZERO:
 				continue

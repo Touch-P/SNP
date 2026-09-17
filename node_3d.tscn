@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://c44810w855j8d" path="res://build/648fb6620b3048a825fb0331.glb" id="18_i0g27"]
 [ext_resource type="Script" uid="uid://b5sv317y70jvl" path="res://scripts/main_scene.gd" id="100_mainscene"]
 [ext_resource type="PackedScene" uid="uid://bjyifkmbnxjse" path="res://player/player.tscn" id="101_player"]
+[ext_resource type="Script" uid="uid://c64586keil74c" path="res://person/shopper.gd" id="102_shopper"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_id0nj"]
 
@@ -22401,3 +22402,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8842587, -0.2920133, 2.7608
 
 [node name="648fb6620b3048a825fb0331" parent="." unique_id=1121092918 instance=ExtResource("18_i0g27")]
 transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 4.060743, 0.0032593757, 0.14784306)
+script = ExtResource("102_shopper")
