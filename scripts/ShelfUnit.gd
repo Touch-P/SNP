@@ -11,7 +11,8 @@ extends Node3D
 ##   Collision    StaticBody3D footprint box. The navmesh bakes around this;
 ##                products have no bodies, so they never affect it.
 ##   Slots        ShelfSlot markers for the front face.
-##   PickPoint    where the customer stands to pick from the front face.
+##   PickPoint    face-level stand point (legacy; every ShelfSlot now gets
+##                its own navmesh-snapped pick_point, see update_pick_points).
 ##   CameraMount  CCTV mount for the front face, placed from the exports below
 ##                (live in the editor, so it can be tuned per shelf instance).
 ## Double-sided shelves: enable double_sided and the back face gets mirrored
@@ -29,6 +30,9 @@ const FACE_BACK := "back"
 		shelf_size = value
 		_refresh_mounts()
 @export var double_sided: bool = false
+## Horizontal distance from a slot out into the aisle where its pick point is
+## placed before being snapped onto the navmesh.
+@export_range(0.1, 2.0, 0.01, "suffix:m") var pick_standoff: float = 0.5
 
 @export_group("Camera mount")
 ## Height of the camera above the floor.
@@ -79,10 +83,13 @@ func _ready() -> void:
 	if strip_baked_products:
 		_strip_baked_products()
 	for face in _faces:
+		var face_slots: Array[ShelfSlot] = []
 		for child in (face["slots"] as Node).get_children():
 			if child is ShelfSlot:
 				child.shelf = self
 				child.face = face["name"]
+				face_slots.append(child)
+		_assign_levels(face_slots)
 	_create_cameras()
 
 
@@ -93,6 +100,13 @@ func get_slots() -> Array[ShelfSlot]:
 			if child is ShelfSlot:
 				result.append(child)
 	return result
+
+
+## Recomputes every slot's navmesh-snapped pick point. Call once the
+## navigation map contains the baked store navmesh.
+func update_pick_points(map: RID) -> void:
+	for slot in get_slots():
+		slot.update_pick_point(map, pick_standoff, global_position.y)
 
 
 func get_cameras() -> Array[ShelfCamera]:
@@ -110,6 +124,20 @@ func get_pick_point(face_name: String) -> Node3D:
 func get_face_normal(face_name: String) -> Vector3:
 	var sign := -1.0 if face_name == FACE_BACK else 1.0
 	return global_basis.z.normalized() * sign
+
+
+## Levels are the distinct slot heights of one face, bottom (0) to top.
+## Back-face slots are mirrored copies, so they get the same levels.
+func _assign_levels(face_slots: Array[ShelfSlot]) -> void:
+	var heights: Array[float] = []
+	for slot in face_slots:
+		var y := snappedf(slot.position.y, 0.01)
+		if not heights.has(y):
+			heights.append(y)
+	heights.sort()
+	for slot in face_slots:
+		slot.level = heights.find(snappedf(slot.position.y, 0.01))
+		slot.level_count = heights.size()
 
 
 func _collect_faces() -> void:

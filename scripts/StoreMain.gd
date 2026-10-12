@@ -33,6 +33,9 @@ func _ready() -> void:
 		var closest := NavigationServer3D.map_get_closest_point(map, entrance.global_position)
 		if NavigationServer3D.map_get_iteration_id(map) > 0 and closest.distance_to(entrance.global_position) < 1.0:
 			break
+	for shelf in get_shelves():
+		shelf.update_pick_points(map)
+	_report_slot_levels()
 	is_store_ready = true
 	store_ready.emit()
 
@@ -45,3 +48,17 @@ func get_shelves() -> Array[ShelfUnit]:
 			result.append(node)
 	result.sort_custom(func(a: ShelfUnit, b: ShelfUnit) -> bool: return a.shelf_id < b.shelf_id)
 	return result
+
+
+## Prints the world-space height (slot marker = product bottom) of the bottom
+## and top slot levels, for checking the pick animations against the shelf.
+func _report_slot_levels() -> void:
+	var bottom := INF
+	var top := -INF
+	for shelf in get_shelves():
+		for slot in shelf.get_slots():
+			if slot.is_bottom_level():
+				bottom = minf(bottom, slot.global_position.y)
+			if slot.is_top_level():
+				top = maxf(top, slot.global_position.y)
+	print("[store] slot levels (world y of product bottom): bottom=%.3f m  top=%.3f m" % [bottom, top])

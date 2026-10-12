@@ -194,11 +194,19 @@ func stop_session(reason: String) -> void:
 	var walk_speed := 0.0
 	var picked: Array[Dictionary] = []
 	var basket: Array[Dictionary] = []
+	var in_hand := 0
 	if is_instance_valid(customer):
 		items_to_pick = customer.items_to_pick
 		walk_speed = customer.walk_speed
 		picked = customer.picked_items.duplicate(true)
 		basket = customer.get_basket_contents()
+		in_hand = customer.get_held_products().size()
+	var on_shelves := _count_shelf_products()
+	var stock_ok := on_shelves + basket.size() + in_hand == _stocked_count
+	print("[rec] stock check: stocked=%d on_shelves=%d basket=%d in_hand=%d -> %s" % [
+		_stocked_count, on_shelves, basket.size(), in_hand, "OK" if stock_ok else "MISMATCH"])
+	if not stock_ok:
+		push_error("RecordingManager: products not conserved (see stock check above)")
 	_remove_customer()
 	_apply_idle_update_mode()
 
@@ -231,6 +239,13 @@ func stop_session(reason: String) -> void:
 		"stocked_slots": _stocked_count,
 		"total_slots": _count_slots(),
 		"fill_ratio": stocking_manager.fill_ratio,
+		"stock_check": {
+			"stocked": _stocked_count,
+			"on_shelves_at_end": on_shelves,
+			"in_basket_at_end": basket.size(),
+			"in_hand_at_end": in_hand,
+			"conserved": stock_ok,
+		},
 		"customer": {"agent_id": "customer_1", "walk_speed": walk_speed},
 		"product_classes": stocking_manager.get_class_table(),
 		"engine_version": Engine.get_version_info()["string"],
@@ -426,6 +441,15 @@ func _cameras_metadata() -> Array:
 	for camera in cameras:
 		result.append(camera.get_metadata())
 	return result
+
+
+## Product nodes still physically on the shelves (children of slots).
+func _count_shelf_products() -> int:
+	var total := 0
+	for shelf in store.get_shelves():
+		for slot in shelf.get_slots():
+			total += slot.count_products()
+	return total
 
 
 func _count_slots() -> int:

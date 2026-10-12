@@ -40,6 +40,14 @@ func setup(class_def: Dictionary, uid: int) -> void:
 	mesh_instance.position = Vector3(0.0, size.y * 0.5, 0.0)
 
 
+## Enables/disables every collision shape under this product. The template
+## has none today; this keeps held / basket products out of physics if a
+## product scene ever gains a body.
+func set_collision_enabled(enabled: bool) -> void:
+	for node in find_children("*", "CollisionShape3D", true, false):
+		(node as CollisionShape3D).set_deferred("disabled", not enabled)
+
+
 ## World-space centre of the product's bounding box.
 func get_center_global() -> Vector3:
 	return global_transform * Vector3(0.0, size.y * 0.5, 0.0)

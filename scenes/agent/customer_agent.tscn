@@ -1,51 +1,12 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/CustomerAgent.gd" id="1_agent"]
+[ext_resource type="PackedScene" uid="uid://dw6oa82k88uo8" path="res://Walking.fbx" id="2_model"]
+[ext_resource type="PackedScene" uid="uid://c1rlxnatxnhem" path="res://shopping_metal_basket.glb" id="3_basket"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.25
 height = 1.7
-
-[sub_resource type="StandardMaterial3D" id="Mat_clothes"]
-albedo_color = Color(0.22, 0.32, 0.48, 1)
-roughness = 0.8
-
-[sub_resource type="StandardMaterial3D" id="Mat_skin"]
-albedo_color = Color(0.87, 0.69, 0.56, 1)
-roughness = 0.7
-
-[sub_resource type="StandardMaterial3D" id="Mat_dark"]
-albedo_color = Color(0.08, 0.08, 0.1, 1)
-
-[sub_resource type="StandardMaterial3D" id="Mat_basket"]
-albedo_color = Color(0.85, 0.15, 0.15, 1)
-roughness = 0.5
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
-material = SubResource("Mat_clothes")
-radius = 0.2
-height = 1.4
-
-[sub_resource type="SphereMesh" id="SphereMesh_head"]
-material = SubResource("Mat_skin")
-radius = 0.12
-height = 0.24
-
-[sub_resource type="BoxMesh" id="BoxMesh_visor"]
-material = SubResource("Mat_dark")
-size = Vector3(0.16, 0.05, 0.04)
-
-[sub_resource type="BoxMesh" id="BoxMesh_basket_bottom"]
-material = SubResource("Mat_basket")
-size = Vector3(0.24, 0.01, 0.36)
-
-[sub_resource type="BoxMesh" id="BoxMesh_basket_side"]
-material = SubResource("Mat_basket")
-size = Vector3(0.01, 0.16, 0.36)
-
-[sub_resource type="BoxMesh" id="BoxMesh_basket_end"]
-material = SubResource("Mat_basket")
-size = Vector3(0.24, 0.16, 0.01)
 
 [node name="CustomerAgent" type="CharacterBody3D"]
 motion_mode = 1
@@ -57,46 +18,38 @@ shape = SubResource("CapsuleShape3D_body")
 
 [node name="Visual" type="Node3D" parent="."]
 
-[node name="Body" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
-mesh = SubResource("CapsuleMesh_body")
+[node name="Model" parent="Visual" instance=ExtResource("2_model")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
 
-[node name="Head" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.57, 0)
-mesh = SubResource("SphereMesh_head")
+[node name="RightHand" type="BoneAttachment3D" parent="Visual/Model/Skeleton3D"]
+bone_name = "mixamorig_RightHand"
+bone_idx = 10
 
-[node name="Visor" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59, -0.1)
-mesh = SubResource("BoxMesh_visor")
+[node name="HoldPoint" type="Marker3D" parent="Visual/Model/Skeleton3D/RightHand"]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0.08, 0.03)
+gizmo_extents = 0.05
 
-[node name="Basket" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34, 0.7, -0.06)
+[node name="LeftHand" type="BoneAttachment3D" parent="Visual/Model/Skeleton3D"]
+bone_name = "mixamorig_LeftHand"
+bone_idx = 34
 
-[node name="Bottom" type="MeshInstance3D" parent="Basket"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.005, 0)
-mesh = SubResource("BoxMesh_basket_bottom")
+[node name="BasketGrip" type="Marker3D" parent="Visual/Model/Skeleton3D/LeftHand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.075, 0.035)
+gizmo_extents = 0.05
 
-[node name="SideL" type="MeshInstance3D" parent="Basket"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.115, 0.08, 0)
-mesh = SubResource("BoxMesh_basket_side")
+[node name="Basket" type="Node3D" parent="Visual/Model/Skeleton3D/LeftHand"]
 
-[node name="SideR" type="MeshInstance3D" parent="Basket"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.115, 0.08, 0)
-mesh = SubResource("BoxMesh_basket_side")
+[node name="Model" parent="Visual/Model/Skeleton3D/LeftHand/Basket" instance=ExtResource("3_basket")]
+transform = Transform3D(0, 0, 0.046, 0, 0.046, 0, -0.046, 0, 0, 0, -0.2039, 0)
 
-[node name="EndF" type="MeshInstance3D" parent="Basket"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, -0.175)
-mesh = SubResource("BoxMesh_basket_end")
+[node name="Items" type="Node3D" parent="Visual/Model/Skeleton3D/LeftHand/Basket"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.328, 0)
 
-[node name="EndB" type="MeshInstance3D" parent="Basket"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.175)
-mesh = SubResource("BoxMesh_basket_end")
-
-[node name="Items" type="Node3D" parent="Basket"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, 0)
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Visual/Model")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_desired_distance = 0.25
-target_desired_distance = 0.15
+target_desired_distance = 0.05
 height = 1.7
 radius = 0.3
