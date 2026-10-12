@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://vqmbamtd2uwx"]
+
+[ext_resource type="PackedScene" uid="uid://bca1dfutid734" path="res://Meshy_AI_Lay_s_Original_Super__0912213814_generate.glb" id="1_m2ggu"]
+
+[sub_resource type="Skin" id="Skin_2683o"]
+
+[node name="Meshy_AI_Lay_s_Original_Super__0912213814_generate" unique_id=1395663619 instance=ExtResource("1_m2ggu")]
+
+[node name="mesh_node" parent="." index="0" unique_id=811269632]
+skin = SubResource("Skin_2683o")

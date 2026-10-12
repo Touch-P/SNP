@@ -1,0 +1,70 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/RecordUI.gd" id="1_ui"]
+
+[node name="RecordUI" type="CanvasLayer"]
+script = ExtResource("1_ui")
+
+[node name="TopPanel" type="PanelContainer" parent="."]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 392.0
+offset_bottom = 60.0
+
+[node name="Margin" type="MarginContainer" parent="TopPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="TopPanel/Margin"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="TopPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="RecordButton" type="Button" parent="TopPanel/Margin/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+focus_mode = 0
+disabled = true
+text = "Record"
+
+[node name="PreviewButton" type="Button" parent="TopPanel/Margin/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+text = "Preview cameras"
+
+[node name="StatusLabel" type="Label" parent="TopPanel/Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+text = "Preparing store..."
+
+[node name="HintLabel" type="Label" parent="TopPanel/Margin/VBox"]
+modulate = Color(1, 1, 1, 0.6)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "RMB-drag look | WASD/QE move | R record/stop | P preview"
+
+[node name="PreviewPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -12.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PreviewGrid" type="GridContainer" parent="PreviewPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 5

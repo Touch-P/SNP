@@ -1,0 +1,12 @@
+[
+	{"class_id": 0, "name": "cola_can",          "base_mesh": "can",    "color": "#d62828", "size": [0.066, 0.122, 0.066]},
+	{"class_id": 1, "name": "energy_drink_can",  "base_mesh": "can",    "color": "#3a86ff", "size": [0.058, 0.135, 0.058]},
+	{"class_id": 2, "name": "water_bottle",      "base_mesh": "bottle", "color": "#8ecae6", "size": [0.065, 0.150, 0.065]},
+	{"class_id": 3, "name": "green_tea_bottle",  "base_mesh": "bottle", "color": "#2a9d8f", "size": [0.060, 0.145, 0.060]},
+	{"class_id": 4, "name": "chips_pouch",       "base_mesh": "pouch",  "color": "#ffbe0b", "size": [0.100, 0.140, 0.040]},
+	{"class_id": 5, "name": "jerky_pouch",       "base_mesh": "pouch",  "color": "#7f5539", "size": [0.090, 0.120, 0.030]},
+	{"class_id": 6, "name": "cereal_box",        "base_mesh": "box",    "color": "#fb8500", "size": [0.100, 0.150, 0.050]},
+	{"class_id": 7, "name": "tissue_box",        "base_mesh": "box",    "color": "#f1c0e8", "size": [0.100, 0.080, 0.100]},
+	{"class_id": 8, "name": "instant_noodle_cup","base_mesh": "cup",    "color": "#f4a261", "size": [0.090, 0.085, 0.090]},
+	{"class_id": 9, "name": "yogurt_cup",        "base_mesh": "cup",    "color": "#e9ecef", "size": [0.070, 0.070, 0.070]}
+]

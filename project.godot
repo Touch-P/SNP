@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="grocerry_store"
-run/main_scene="res://node_3d.tscn"
+run/main_scene="res://scenes/store/store_main.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[navigation]
+
+3d/default_cell_size=0.1
+3d/default_cell_height=0.1
 
 [physics]
 

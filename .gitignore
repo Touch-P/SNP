@@ -4,3 +4,6 @@
 
 # Exported builds (regenerate via `godot --export-release`)
 /build/
+
+# Recorded datasets
+/export/

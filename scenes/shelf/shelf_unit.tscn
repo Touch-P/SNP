@@ -1,0 +1,150 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ShelfUnit.gd" id="1_shelf"]
+[ext_resource type="Script" path="res://scripts/ShelfSlot.gd" id="2_slot"]
+[ext_resource type="PackedScene" uid="uid://cidlgh0nnl613" path="res://confectionery_shelf (1).glb" id="3_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_shelf"]
+size = Vector3(0.584, 0.78, 0.255)
+
+[node name="ShelfUnit" type="Node3D"]
+script = ExtResource("1_shelf")
+
+[node name="Model" parent="." instance=ExtResource("3_model")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0.219448, 0.61, 0.07203)
+
+[node name="Collision" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39, 0)
+shape = SubResource("BoxShape3D_shelf")
+
+[node name="Slots" type="Node3D" parent="."]
+
+[node name="Slot_L0_C0" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 0.008, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l0_c0"
+
+[node name="Slot_L0_C1" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11, 0.008, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l0_c1"
+
+[node name="Slot_L0_C2" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.008, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l0_c2"
+
+[node name="Slot_L0_C3" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11, 0.008, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l0_c3"
+
+[node name="Slot_L0_C4" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0.008, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l0_c4"
+
+[node name="Slot_L1_C0" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 0.182, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l1_c0"
+
+[node name="Slot_L1_C1" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11, 0.182, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l1_c1"
+
+[node name="Slot_L1_C2" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.182, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l1_c2"
+
+[node name="Slot_L1_C3" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11, 0.182, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l1_c3"
+
+[node name="Slot_L1_C4" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0.182, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l1_c4"
+
+[node name="Slot_L2_C0" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 0.357, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l2_c0"
+
+[node name="Slot_L2_C1" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11, 0.357, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l2_c1"
+
+[node name="Slot_L2_C2" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.357, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l2_c2"
+
+[node name="Slot_L2_C3" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11, 0.357, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l2_c3"
+
+[node name="Slot_L2_C4" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0.357, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l2_c4"
+
+[node name="Slot_L3_C0" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 0.534, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l3_c0"
+
+[node name="Slot_L3_C1" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11, 0.534, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l3_c1"
+
+[node name="Slot_L3_C2" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.534, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l3_c2"
+
+[node name="Slot_L3_C3" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11, 0.534, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l3_c3"
+
+[node name="Slot_L3_C4" type="Marker3D" parent="Slots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0.534, 0.06)
+gizmo_extents = 0.05
+script = ExtResource("2_slot")
+slot_id = "l3_c4"
+
+[node name="PickPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.58)
+gizmo_extents = 0.2
+
+[node name="CameraMount" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.552876, 0.833263, 0, -0.833263, 0.552876, 0, 2.5, 1.5275)
+gizmo_extents = 0.3

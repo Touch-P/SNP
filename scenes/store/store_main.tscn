@@ -1,0 +1,163 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/StoreMain.gd" id="1_store"]
+[ext_resource type="PackedScene" path="res://scenes/shelf/shelf_unit.tscn" id="2_shelf"]
+[ext_resource type="Script" path="res://scripts/StockingManager.gd" id="3_stock"]
+[ext_resource type="Script" path="res://scripts/EventLogger.gd" id="4_log"]
+[ext_resource type="Script" path="res://scripts/RecordingManager.gd" id="5_rec"]
+[ext_resource type="Script" path="res://scripts/FreeCamera.gd" id="6_cam"]
+[ext_resource type="PackedScene" path="res://scenes/ui/record_ui.tscn" id="7_ui"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_store"]
+
+[sub_resource type="Sky" id="Sky_store"]
+sky_material = SubResource("ProceduralSkyMaterial_store")
+
+[sub_resource type="Environment" id="Environment_store"]
+background_mode = 2
+sky = SubResource("Sky_store")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.6
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_store"]
+geometry_parsed_geometry_type = 1
+cell_size = 0.1
+cell_height = 0.1
+agent_height = 1.7
+agent_radius = 0.3
+agent_max_climb = 0.2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(6, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(6, 0.1, 8)
+
+[node name="StoreMain" type="Node3D" node_paths=PackedStringArray("navigation_region", "shelves_root", "entrance", "exit_marker")]
+script = ExtResource("1_store")
+navigation_region = NodePath("NavigationRegion3D")
+shelves_root = NodePath("NavigationRegion3D/Shelves")
+entrance = NodePath("Entrance")
+exit_marker = NodePath("Exit")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_store")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 4, 0)
+light_energy = 1.1
+shadow_enabled = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_store")
+
+[node name="Floor" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+mesh = SubResource("PlaneMesh_floor")
+
+[node name="FloorCollider" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -0.05, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/FloorCollider"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="Walls" type="Node3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.035851806, 0.5977434, -1.0051181)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.9944468, 0, 3.0217814)
+rotation_order = 0
+use_collision = true
+size = Vector3(6, 1.2, 0.1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.0223894, 0, 2.0415573)
+rotation_order = 0
+use_collision = true
+size = Vector3(4.039551, 1.2, 0.1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3841858e-07, 0, 6.0868793)
+rotation_order = 0
+use_collision = true
+size = Vector3(8.116455, 1.2, 0.1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Walls"]
+rotation_order = 0
+use_collision = true
+size = Vector3(8.116455, 1.2, 0.1)
+
+[node name="Shelves" type="Node3D" parent="NavigationRegion3D"]
+
+[node name="shelf_01" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.291478, 0, 0.221087)
+shelf_id = "shelf_01"
+
+[node name="shelf_02" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.870975, 0, 0.221087)
+shelf_id = "shelf_02"
+
+[node name="shelf_03" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.447667, 0, 0.221087)
+shelf_id = "shelf_03"
+
+[node name="shelf_04" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.030428, 0, 0.221087)
+shelf_id = "shelf_04"
+
+[node name="shelf_05" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.613239, 0, 0.221087)
+shelf_id = "shelf_05"
+
+[node name="shelf_06" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.296517, 0, -0.051453)
+shelf_id = "shelf_06"
+
+[node name="shelf_07" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.876012, 0, -0.051453)
+shelf_id = "shelf_07"
+
+[node name="shelf_08" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.452705, 0, -0.051453)
+shelf_id = "shelf_08"
+
+[node name="shelf_09" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 3.035466, 0, -0.051453)
+shelf_id = "shelf_09"
+
+[node name="shelf_10" parent="NavigationRegion3D/Shelves" instance=ExtResource("2_shelf")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 3.618277, 0, -0.051453)
+shelf_id = "shelf_10"
+
+[node name="Entrance" type="Marker3D" parent="."]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5.3, 0, -4.45)
+gizmo_extents = 0.4
+
+[node name="Exit" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6, 0, -4.55)
+gizmo_extents = 0.4
+
+[node name="OverviewCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 4.6, 5.2)
+current = true
+fov = 65.0
+script = ExtResource("6_cam")
+
+[node name="Customers" type="Node3D" parent="."]
+
+[node name="StockingManager" type="Node" parent="."]
+script = ExtResource("3_stock")
+
+[node name="EventLogger" type="Node" parent="."]
+script = ExtResource("4_log")
+
+[node name="RecordingManager" type="Node" parent="." node_paths=PackedStringArray("store", "stocking_manager", "event_logger", "customers_root")]
+script = ExtResource("5_rec")
+store = NodePath("..")
+stocking_manager = NodePath("../StockingManager")
+event_logger = NodePath("../EventLogger")
+customers_root = NodePath("../Customers")
+
+[node name="RecordUI" parent="." node_paths=PackedStringArray("recording_manager") instance=ExtResource("7_ui")]
+recording_manager = NodePath("../RecordingManager")
